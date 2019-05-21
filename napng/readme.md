@@ -44,4 +44,43 @@
 |:---:|---|---|
 | `0000` | Data Length (In Bytes) | More than `0`. |
 | `000A` | Frame Length (In Milliseconds) | More than `0`. |
-| `0015` | Image Data | Raw/Compressed PNG image.|
+| `0010` | Image Data | Raw/Compressed PNG image.|
+
+<br><hr>
+
+## Example File
+*Sections grouped with code blocks.*  
+*Subsections seperated with linebreaks.*
+
+**Version & Type**
+```
+NAPNG
+01
+00
+00
+P
+```
+
+**Creation & Edit Metadata**
+```
+0000001558460507
+0000001558616733
+NAPNGSTUDIO+++++
+NAPNGSTUDIO+++++
+```
+
+**Frame 1**
+```
+000060234
+000100
+[PNG Data]
+```
+
+**Frame 2**
+```
+000059342
+000100
+[PNG Data]
+```
+
+**Continued...**
