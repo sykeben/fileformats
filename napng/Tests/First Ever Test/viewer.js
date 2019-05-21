@@ -93,14 +93,14 @@ function frameplay() {
 
 }
 
-if (hex2a(read(0, 5)) == "NAPNG") printcolor(`Filetype confirmed as NAPNG version ${hex2a(read(5,7))}.${hex2a(read(7,9))}.${hex2a(read(9,11))} with compression type "${hex2a(read(11,12))}"`, 'red')
+if (hex2a(read(0, 5)) == "NAPNG") printcolor(`Filetype confirmed as <u>NAPNG version ${hex2a(read(5,7))}.${hex2a(read(7,9))}.${hex2a(read(9,11))}</u> with <u>compression type "${hex2a(read(11,12))}"</u>`, 'red')
 else printcolor("Unknown filetype, things may break!", 'red')
 
-if (hex2a(read(12,28)) == '0000000000000000') printcolor("File was never created?", 'green')
-else printcolor(`File created ${new Date(parseInt(hex2a(read(12,28)))).toLocaleString()} by application "${hex2a(read(44,60)).replace(/\+/g, "")}"`, 'green')
+if (hex2a(read(12,28)) == '0000000000000000') printcolor("File was <u>never created</u>?", 'green')
+else printcolor(`File <u>created ${new Date(parseInt(hex2a(read(12,28)))).toLocaleString()}</u> by application "${hex2a(read(44,60)).replace(/\+/g, "")}"`, 'green')
 
-if (hex2a(read(28,44)) == '0000000000000000') printcolor("File has never been edited.", 'green')
-else printcolor(`File edited ${new Date(parseInt(hex2a(read(28,44)))).toLocaleString()} by application "${hex2a(read(60,76)).replace(/\+/g, "")}"`, 'green')
+if (hex2a(read(28,44)) == '0000000000000000') printcolor("File was <u>never edited</u>.", 'green')
+else printcolor(`File <u>edited ${new Date(parseInt(hex2a(read(28,44)))).toLocaleString()}</u> by application "${hex2a(read(60,76)).replace(/\+/g, "")}"`, 'green')
 
 var address = 76
 var framedata = []
@@ -114,7 +114,7 @@ while (address < rawdata.length/2) {
     framedata[x].dist = parseInt(hex2a(read(address, address+9)))
     framedata[x].time = parseInt(hex2a(read(address+10, address+15)))
 
-    printcolor(`Frame ${x} starts at byte ${framedata[x].start}, is ${framedata[x].dist} bytes long, and displays for ${framedata[x].time}ms.`, 'blue')
+    printcolor(`<u>Frame ${x}</u> starts at byte ${framedata[x].start}, is ${framedata[x].dist} bytes long, and displays for ${framedata[x].time}ms.`, 'blue')
 
     address += (15 + framedata[x].dist)
 
