@@ -1,19 +1,14 @@
 # NAPNG
-**N**ew **A**nimated **PNG**: A simpler form of the `apng` format.  
-These docs are for version `01.00.00`
-
-
+**N**ew **A**nimated **PNG**: A simpler form of the `apng` format. These docs are for version `01.00.00`
 
 <br><hr>
 
 ## File Layout
 | Address | Section |
 |:---:|---|
-| `0000` | Version & Type |
-| `000C` | Creation & Edit Metadata |
-| `004C` | Frames |
-
-
+| `0000` | [Version & Type](#version--type) |
+| `000C` | [Creation & Edit Metadata](#creation--edit-metadata) |
+| `004C` | [Frames](#frames) |
 
 <br><hr>
 
