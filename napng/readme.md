@@ -34,7 +34,14 @@
 ### Frames
 | Address | Subsection | Value(s) |
 |:---:|---|---|
-| `004C` | Frame 1 | Frame data |
-| *Relative* | Frame 2 | Frame data |
-| *Relative* | Frame 3 | Frame data |
-| *Continued* | Frame *...* | Frame data |
+| `004C` | Frame 1 | [Frame data](#frame-format). |
+| *Continued* | Frame *...* | Continued [frame data](#frame-format) |
+
+<br><hr>
+
+## Frame Format
+| Relative Address | Block | Value(s) |
+|:---:|---|---|
+| `0000` | Data Length (In Bytes) | More than `0`. |
+| `000A` | Frame Length (In Milliseconds) | More than `0`. |
+| `0015` | Image Data | Raw/Compressed PNG image.|
