@@ -1,0 +1,9 @@
+"Exterior Light Angle & Intensity VS Temp", 1560229232, 900000
+"Light Angle":"DEG":5, "Light Intensity":"LM":10, "Temperature":"F":0.25
+10, 1000, 50
+11, 1010, 51
+13, 1025, 53
+16, 1050, 55
+20, 1080, 59
+27, 1145, 63
+35, 1309, 67
