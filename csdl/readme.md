@@ -24,23 +24,20 @@
 ### Log Metadata
 | Field | Data | Value(s) |
 |:---:|---|---|
-| `1` | Submeta for Log `1` | [Meta Subfields](#log-meta-format) |
-| *Continued* | Submeta for Log *...* | Continued [Meta Subfields](#log-meta-format) |
+| `1` | Title for Log `1` | Double-quoted string. |
+| `2` | Unit for Log `1` | Double-quoted string. |
+| `3` | Error Range for Log `1` | Number stating the "+/-" value of a measurement. |
+| `4` | Title for Log `2` | Double-quoted string. |
+| `5` | Unit for Log `2` | Double-quoted string. |
+| `6` | Error Range for Log `2` | Number stating the "+/-" value of a measurement. |
+| *Continued* | Title, Unit, & Error for Log *...* | Continued Data |
 
 ### Log Data
 | Field | Data | Value(s) |
 |:---:|---|---|
 | `1` | Value for Log `1` | Data |
+| `2` | Value for Log `2` | Data |
 | *Continued* | Value for Log *...* | Continued Data |
-
-<br><hr>
-
-## Log Meta Format
-| Subfield | Data | Value(s) |
-|:---:|---|---|
-| `1` | Log Title | Double-quoted string. |
-| `2` | Log Unit | Double-quoted string. |
-| `3` | Error Range | Number stating the "+/-" value of a measurement. |
 
 <br><hr>
 
