@@ -1,0 +1,186 @@
+<head>
+
+    <title>CSDL Example Reader</title>
+
+    <style>
+
+        body {
+            padding: 10px;
+        }
+
+        hr {
+            margin: 25px 0;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        h2 {
+            margin-bottom: 7.5px;
+            text-decoration: underline;
+        }
+
+        button[onclick="decode()"] {
+            margin-left: -1px;
+        }
+
+        #input {
+            width: 100%;
+            height: 20em;
+        }
+
+        table {
+            margin: 4px;
+            background-color: black;
+        }
+
+        td, th {
+            padding: 5px;
+            text-align: center;
+        }
+
+        th {
+            background-color: lightgray;
+        }
+        
+        td {
+            background-color: white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>CSDL Example Reader</h1>
+
+    <hr>
+
+    <h2>Input Raw Data</h2>
+    <textarea id="input"></textarea><br>
+    <button onclick="decode()">Decode</button>
+
+    <hr>
+
+    <h2>Parsed Data</h2>
+    <label id="title"></label> (Captured <span id="start"></span>)<br>
+    <table id="table"></table>
+
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
+    <script type="text/javascript">
+
+        function CSVToArray( strData, strDelimiter ){
+
+            strDelimiter = (strDelimiter || ",");
+            
+            var objPattern = new RegExp(
+                (
+                    
+                    "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+                    
+                    "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+                    
+                    "([^\"\\" + strDelimiter + "\\r\\n]*))"
+                ),
+                "gi"
+                );
+            
+            var arrData = [[]];
+            var arrMatches = null;
+            while (arrMatches = objPattern.exec( strData )){
+                
+                var strMatchedDelimiter = arrMatches[ 1 ];
+                
+                if (
+                    strMatchedDelimiter.length &&
+                    (strMatchedDelimiter != strDelimiter)
+                    ){
+                    arrData.push( [] );
+                }
+        
+                if (arrMatches[ 2 ]){
+                    var strMatchedValue = arrMatches[ 2 ].replace(
+                        new RegExp( "\"\"", "g" ),
+                        "\""
+                        );
+                }
+                
+                else {
+                    var strMatchedValue = arrMatches[ 3 ];
+                }
+                
+                arrData[ arrData.length - 1 ].push( strMatchedValue );
+            }
+            
+            return( arrData );
+        }
+    </script>
+
+    <script>
+        
+        window.onload = function() {
+            $("#input").val("\"Exterior Light Angle & Intensity VS Temp\",1560229232,900000\n\"Light Angle\",\"DEG\",5,\"Light Intensity\",\"LM\",10,\"Temperature\",\"F\",0.25\n10,1000,50\n11,1010,51\n13,1025,53\n16,1050,55\n20,1080,59\n27,1145,63\n35,1309,67");
+            decode();
+        }
+
+        function decode() {
+
+            $("#table").html("");
+            var html = "";
+
+            var rawinput = $("#input").val();
+            var csvinput = CSVToArray(rawinput, ',');
+
+            var rawmeta = csvinput[0];
+            var rawtitles = csvinput[1];
+            var rawlogs = csvinput.slice(2, csvinput.length);
+
+            var csvmeta = {
+                title: rawmeta[0],
+                date: new Date(parseInt(rawmeta[1]*1000))
+            };
+
+            $("#title").text(csvmeta.title);
+            $("#start").text(csvmeta.date.toLocaleString());
+
+            var csvtitles = [];
+            for (var i=0; i<rawtitles.length; i+=3) {
+                csvtitles[i/3] = {
+                    title: rawtitles[i],
+                    unit: rawtitles[i+1],
+                    range: parseInt(rawtitles[i+2])
+                };
+            };
+
+            html += "<thead><tr>";
+            for (var i=0; i<csvtitles.length; i++) {
+                html +=
+                    `<th>
+                        ${csvtitles[i].title}<br>
+                        (in "${csvtitles[i].unit}")
+                    </th>`;
+            };
+            html += "</tr></thead>";
+
+            var csvlogs = rawlogs;
+
+            html += "<tbody>";
+            for (var i=0; i<csvlogs.length; i++) {
+                html += "<tr>";
+                for (var j=0; j<csvlogs[i].length; j++) {
+                    html += `<td>${csvlogs[i][j]}</td>`;
+                };
+                html += "</tr>";
+            };
+            html += "</tbody>";
+
+            $("#table").html(html);
+
+        }
+
+    </script>
+
+</body>
